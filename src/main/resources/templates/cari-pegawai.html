@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Cari Pegawai</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
+</head>
+
+<body>
+<form th:action="@{/pegawai/cari}" method="get">
+<select id=selProvinsi name="idProvinsi">
+    <option th:value="0"
+            th:text="'Pilih provinsi'">
+    </option>
+    <option th:each="dropDownItem : ${provinsiList}"
+            th:value="${dropDownItem.id}"
+            th:text="${dropDownItem.nama}">
+    </option>
+</select>
+<select id=selInstansi name="idInstansi">
+    <option th:value="0"
+            th:text="'Pilih instansi'">
+    </option>
+</select>
+<select name="idJabatan">
+    <option th:value="0"
+            th:text="'Pilih jabatan'">
+    </option>
+    <option th:each="dropDownItem : ${jabatan}"
+            th:value="${dropDownItem.id}"
+            th:text="${dropDownItem.nama}">
+    </option>
+</select>
+    <button type="submit">Cari</button>
+</form>
+
+<h1>Cari Pegawai</h1>
+<table id="tabelPegawai" class="display">
+    <!-- Header Table -->
+    <thead>
+    <tr>
+        <th>NIP</th>
+        <th>Nama</th>
+        <th>Tempat Lahir</th>
+        <th>Tanggal Lahir</th>
+        <th>Tahun Masuk</th>
+        <th>Nama Instansi</th>
+        <th>Jabatan</th>
+    </tr>
+    </thead>
+</table>
+
+</body>
+<script>
+    $("#selProvinsi").change(function(){
+        var provinsiId = $(this).val();
+        $.ajax({
+            type: 'GET',
+            url: "/listinstansi?idProvinsi=" + provinsiId,
+            success: function(data){
+                var slctInt=$('#selInstansi'), option="";
+                slctInt.empty();
+
+                for(var i=0; i<data.length; i++){
+                    option = option + "<option value='"+data[i].id + "'>"+data[i].nama + "</option>";
+                }
+                slctInt.append(option);
+            },
+            error:function(){
+                alert("error");
+            }
+
+        });
+    });
+</script>
+</html>

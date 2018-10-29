@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>404 Not Found</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/view.css}">
+    <object th:include="home :: homecss" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="home :: navbar"></div>
+<h2>Halaman tidak ditemukan</h2>
+</body>
+<script th:include="/fragments/fragment :: navibarjs" th:remove="tag"></script>
+<script th:src="@{/js/search-filter.js}"></script>
+<script type="text/javascript">
+    $("#navibar").menumaker({
+        title: "Menu",
+        format: "multitoggle"
+    });
+</script>
+</html>

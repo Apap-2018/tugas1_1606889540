@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Sistem Informasi Kepegawaian</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/tambah-pegawai.css}">
+    <link rel='stylesheet' href='https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>
+    <style>
+        #navibar {
+            position: relative;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<section class="tambah-pegawai-bg">
+    <div th:replace="home :: navbar"></div>
+    <div class="left-half">
+            <div id="login-box">
+                <form th:action="@{/pegawai/tambah}" th:object="${pegawai}" method="POST" class="left">
+                    <h1>Tambah Data Pegawai</h1>
+                    <input type="text" name="nama" placeholder="Nama" />
+                    <input type="text" name="tempatLahir" placeholder="Tempat Lahir" />
+                    <input type="date" name="tanggalLahir" placeholder="Tanggal Lahir" />
+                    <input type="number" name="tahunMasuk" placeholder="Tahun Masuk" /><br>
+                    <select id=selProvinsi name="idProvinsi">
+                        <option th:value="0"
+                                th:text="'Pilih provinsi'">
+                        </option>
+                        <option th:each="dropDownItem : ${provinsiList}"
+                                th:value="${dropDownItem.id}"
+                                th:text="${dropDownItem.nama}">
+                        </option>
+                    </select>
+                    <select id=selInstansi name="idInstansi">
+                        <option th:value="0"
+                                th:text="'Pilih instansi'">
+                        </option>
+                    </select>
+                    <select name="idJabatan">
+                        <option th:value="0"
+                                th:text="'Pilih jabatan'">
+                        </option>
+                        <option th:each="dropDownItem : ${jabatan}"
+                                th:value="${dropDownItem.id}"
+                                th:text="${dropDownItem.nama}">
+                        </option>
+                    </select>
+                    <br>
+                    <input type="submit" name="simpan" value="Simpan" />
+                </form>
+            </div>
+    </div>
+
+    </div>
+    <div class="right-half">
+    </div>
+</section>
+
+<script th:include="/fragments/fragment :: navibarjs" th:remove="tag"></script>
+<script type="text/javascript">
+    $("#navibar").menumaker({
+        title: "Menu",
+        format: "multitoggle"
+    });
+</script>
+<script>
+    $("#selProvinsi").change(function(){
+        var provinsiId = $(this).val();
+        $.ajax({
+            type: 'GET',
+            url: "/listinstansi?idProvinsi=" + provinsiId,
+            success: function(data){
+                var slctInt=$('#selInstansi'), option="";
+                slctInt.empty();
+
+                for(var i=0; i<data.length; i++){
+                    option = option + "<option value='"+data[i].id + "'>"+data[i].nama + "</option>";
+                }
+                slctInt.append(option);
+            },
+            error:function(){
+                alert("error");
+            }
+
+        });
+    });
+</script>
+
+</body>
+</html>

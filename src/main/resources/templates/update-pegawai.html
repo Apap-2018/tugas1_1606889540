@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Sistem Informasi Kepegawaian</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/tambah-pegawai.css}">
+    <link rel='stylesheet' href='https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>
+
+    <style>
+        #navibar {
+            position: relative;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<form th:action="@{/pegawai/ubah}" th:object="${pegawai}" method="POST" class="left">
+    <input type="hidden" name="idJabatan" th:field="*{id}" />
+    <input type="text" name="nama" placeholder="Nama" th:field="*{nama}" />
+    <input type="text" name="tempatLahir" placeholder="Tempat Lahir" th:field="*{tempatLahir}"/>
+    <input type="text" name="tanggalLahir" placeholder="Tanggal Lahir" th:field="*{tanggalLahir}"/>
+    <input type="number" name="tahunMasuk" placeholder="Tahun Masuk" th:field="*{tahunMasuk}"/>
+    <select name="provinsi" th:field="*{instansi.provinsi.id}">
+        <option th:each="dropDownItem : ${provinsiList}"
+                th:value="${dropDownItem.id}"
+                th:text="${dropDownItem.nama}">
+        </option>
+    </select>
+    <!---<input type="text" name="instansi" placeholder="Instansi" th:field="*{instansi.nama}"/>--->
+    <!--<select name="jabatan" placeholder="Jabatan" th:field="*{j}">
+        <option th:each="dropDownItem : ${jabatan}"
+                th:value="${dropDownItem.id}"
+                th:text="${dropDownItem.nama}"
+                th:selected="${jabatanPegawai.id == dropDownItem.id}">
+        </option>
+    </select>--->
+
+
+    <input type="submit" name="simpan" value="Simpan" />
+</form>
+
+
+</body>
+</html>

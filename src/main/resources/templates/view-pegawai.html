@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>SIPEG</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/view.css}">
+    <object th:include="home :: homecss" th:remove="tag"></object>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+<div th:replace="home :: navbar"></div>
+<div class="container emp-profile">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="profile-head">
+                    <h5 th:text="${pegawai.nama}"></h5>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Tentang</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>NIP</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p th:text="${pegawai.nip}"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Nama</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p th:text="${pegawai.nama}"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Tempat Lahir</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p th:text="${pegawai.tempatLahir}"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Tanggal Lahir</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p th:text="${pegawai.tanggalLahir}"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Tahun Masuk</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p th:text="${pegawai.tahunMasuk}"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Nama Instansi</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p th:text="${pegawai.instansi.nama}"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Jabatan</label>
+                            </div>
+                            <div class="col-md-6">
+                                <div th:each="jab : *{pegawai.jabatanPegawai}">
+                                    <p th:text="${jab.jabatan.nama}"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Gaji</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p th:text="${gaji}"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form th:action="@{/pegawai/ubah}">
+                                    <input type="hidden" name="nip" th:value="${pegawai.nip}" />
+                                    <button type="submit">Ubah</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</body>
+<script th:include="/fragments/fragment :: navibarjs" th:remove="tag"></script>
+<script th:src="@{/js/search-filter.js}"></script>
+<script type="text/javascript">
+    $("#navibar").menumaker({
+        title: "Menu",
+        format: "multitoggle"
+    });
+</script>
+
+</html>
